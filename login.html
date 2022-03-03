@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login To Your Account | Beardo</title>
+    <link rel="stylesheet" href= 
+    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="account.css"> -->
+    <script
+    src="https://kit.fontawesome.com/e3ddd9c631.js"
+    crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="login.css">
+<style>
+    #a{
+        text-decoration: none;
+    }
+</style>
+</head>
+<body>
+    <div id="header"></div>
+    <div style="margin-left: 6%;padding-top: 150px;" onclick="window.location.href='index.html' ">Home/<span style="color:red">Account</span></div>
+    <h2 style="margin-left: 7%; padding: 1.5%;">ACCOUNT</h2>
+    <div id="account_main_div">
+        <div id="signup_div" class="box">
+            <div class="input_text"><div> <b> BECOME A MEMBER </b></div>
+            <div>Please file below details and become a member.</div></div>
+            <div class="signup_input">
+                <span><input type="text" placeholder="First name" id="f_name"></span> <span><input id="l_name" type="text" placeholder="Last name"></span>
+            </div>
+            <div class="signup_input">
+                <span><input type="text" id="email" placeholder="Email address"></span> <span><input id="mobile" type="number" placeholder="Mobile"></span>
+            </div>
+            
+            <div class="signup_input">
+                <span><input type="password" name="password" id="password" placeholder="Password"></span> <span><input type="password" name="password" id="confirm_password" placeholder="Confirm password"></span>
+            </div>
+            <div id="warning"></div>
+            <button id="signup_btn" >BECOME A MEMBER</button>
+        </div>
+        <div id="login_div" class="box">
+            <div class="input_text">
+                <div class="bold"> <b>ALREADY A MEMBER?</b> </div>
+             <span>Please enter your email and <br> password to login</span>
+
+            </div>
+            <input type="text" id="login_email" placeholder="Email address">
+            <input type="password" name="login_password" id="login_password" placeholder="Password">
+
+           <button id="login_btn"  >LOGIN</button>
+           <a  id="a" href="https://www.beardo.in/forgot-password"><p style="color:red;">forgot paasword?</p></a>
+           <div class="text_center" style="color:grey">OR</div>
+
+            <div class="flex" style="margin-bottom: 5%;">
+                <div class="text_center"  style="padding:4px 2px;background-color:rgb(45,70,185);color:white">
+                    Login with Facebook
+                </div>
+                <div class="text_center" style="padding:4px 2px;background-color: beige;">Login with Google</div>
+            </div>
+
+        </div>
+    </div>
+    <div class="footer_body"></div>
+    
+</body>
+</html>
+<script type="module">
+    var alert=document.getElementById("warning")
+    import {header} from "./components/header1.js";
+    document.getElementById("header").innerHTML=header();
+    var sign_up=document.getElementById("signup_btn");
+    sign_up.addEventListener("click",function signup(event){
+        let user={}
+        var f_name=document.getElementById("f_name").value;
+        var l_name=document.getElementById("l_name").value;
+        var emailID=document.getElementById("email").value;
+        var mob=document.getElementById("mobile").value;
+        var pass=document.getElementById("password").value;
+        var confirm_pass=document.getElementById("confirm_password").value;
+        // if(f_name==null ||l_name==null || emailID==null || mob==null|| pass==null){
+        //         alert.innerText="Please enter all details !"                                                                                             //jagamohan panda{fw14_011}
+        //         alert.style.color="red"; 
+        // }
+        if(pass==confirm_pass){
+            user.first_name=f_name;
+            user.last_name=l_name;
+            user.email=emailID;
+            user.mobile=mob;
+            user.password=pass;
+            let data=JSON.parse(localStorage.getItem(emailID));
+            if(data){
+                
+                alert.innerText="Please login to continue!"
+                alert.style.color="red";
+                // setTimeout(()2000)                                                                                                                      //jagamohan panda{fw14_011}
+            }
+            else{
+
+                localStorage.setItem(emailID,JSON.stringify(user));
+                alert(`sign up success! welcome ${f_name} .`)
+            }
+        }
+        else{
+            let alert=document.getElementById("warning")
+            alert.innerText="Please enter same password to confirm!"
+            alert.style.color="red"
+        }
+        
+        // console.log(user)
+    });
+    import account from"./components/account.js";
+    var account_div=account();
+    var log_in=document.getElementById("login_btn");
+    log_in.addEventListener("click",function login(event){
+        // alert("login")
+        let emailID=document.getElementById("login_email").value;
+        let pass=document.getElementById("login_password").value;
+        let data=JSON.parse(localStorage.getItem(emailID));
+        console.log(data)
+        if(emailID==data.email && pass==data.password){
+            // alert("succes!");
+            showData(emailID)
+        }
+        else{
+            alert("wrong details")
+        }
+        
+    }); 
+    
+    const showData=(email)=>{
+        var user=JSON.parse(localStorage.getItem(email));
+
+        // var acc_body=document.createElement("div");
+        // acc_body.id="acc_body";
+        // acc_body.innerHTML=account_div ;
+        // console.log(account());
+        document.getElementById("account_main_div").innerHTML=account_div ;
+        document.getElementById("first_name").innerText= " "+user.first_name
+
+        document.getElementById("last_name").textContent=" "+ user.last_name;
+        document.getElementById("email_id").textContent=" "+user.email;                                                                                                                                                                                                                                                                         
+        document.getElementById("mob").innerText=" "+user.mobile;
+        // document.getElementById("gender").innerText=
+    }
+    import {footer} from "./components/footer.js"
+    var foot=document.querySelector(".footer_body");
+    foot.innerHTML=footer()
+    
+    // console.log(account())
+
+                                                                                                                                                                                            //jagamohan panda{fw14_011}
+    
+</script>                                                                   
